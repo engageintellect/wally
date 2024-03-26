@@ -35,17 +35,17 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 bg-gray-900 text-white">
+    <main className="flex min-h-screen flex-col py-10 items-center bg-gray-900 text-white">
       <div className="flex flex-col items-center">
-        <h1 className="text-5xl mb-4">Wally</h1>
-        <p className="text-lg mb-8">Bitcoin Wallet Generator</p>
-        <div className="flex items-center gap-8">
+        <h1 className="text-7xl">wally.</h1>
+        <p className="text-lg">Bitcoin Wallet Generator</p>
+        <div className="flex items-center gap-8 py-5">
           <Button onClick={generateWallet}>Generate Wallet</Button>
         </div>
       </div>
 
       {wallet && (
-        <div className="mt-10 w-full max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg p-5">
+        <div className=" w-full max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg p-5">
           <h2 className="text-xl font-semibold mb-4">Wallet Data:</h2>
           <div className="space-y-4">
             {Object.entries(wallet).map(([key, value]) => (
