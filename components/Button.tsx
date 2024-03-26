@@ -5,7 +5,7 @@ interface ButtonProps {
 
 const Button = ({ onClick, children }: ButtonProps) => {
   return (
-    <button className="" onClick={onClick}>
+    <button className="w-full" onClick={onClick}>
       {children}
     </button>
   );
