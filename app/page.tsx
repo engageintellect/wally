@@ -22,15 +22,18 @@ const keyDisplayNames: { [key in keyof WalletData]: string } = {
 };
 
 export default function Home() {
+  const [loading, setLoading] = useState<boolean>(false);
   const [wallet, setWallet] = useState<WalletData | null>(null);
   const [requestCounter, setRequestCounter] = useState<number>(0);
 
   const generateWallet = async () => {
     setRequestCounter((prev) => prev + 1);
     try {
+      setLoading(true);
       const response = await fetch(`/api/walletGen?_=${requestCounter}`);
       const data: WalletData = await response.json();
       setWallet(data);
+      setLoading(false);
     } catch (error) {
       console.error("Failed to fetch wallet data:", error);
       setWallet(null);
@@ -55,7 +58,11 @@ export default function Home() {
             <Button onClick={generateWallet}>
               <div className="flex items-center gap-2 w-full btn btn-primary">
                 Generate Wallet
-                <RiAiGenerate className="w-7 h-7" />
+                {loading ? (
+                  <div className="spinner spinner-primary"></div> // If 'loading' is true
+                ) : (
+                  <RiAiGenerate className="w-7 h-7" />
+                )}
               </div>
             </Button>
             <Button onClick={() => setWallet(null)}>
@@ -69,7 +76,17 @@ export default function Home() {
 
         {wallet && (
           <div className="w-full max-w-md mx-auto border-primary bg-base-100 rounded border p-5">
-            <h2 className="text-xl font-semibold mb-4">Wallet Data:</h2>
+            <div className="text-xl font-semibold mb-4">
+              <div className="flex items-center gap-2">
+                Wallet Data:
+                <a
+                  href={`https://www.blockchain.com/explorer/addresses/btc/${wallet.btcAddress}`}
+                  className="btn btn-primary"
+                >
+                  View on Blockchain
+                </a>
+              </div>
+            </div>
             <div className="space-y-4">
               {Object.entries(wallet).map(([key, value]) => {
                 const displayName = keyDisplayNames[key as keyof WalletData]; // Use a type assertion here
