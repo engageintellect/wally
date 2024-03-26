@@ -59,7 +59,7 @@ export default function Home() {
               <div className="flex items-center gap-2 w-full btn btn-primary">
                 Generate Wallet
                 {loading ? (
-                  <div className="spinner spinner-primary"></div> // If 'loading' is true
+                  <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   <RiAiGenerate className="w-7 h-7" />
                 )}
