@@ -3,12 +3,19 @@
 import { useState } from "react";
 import QRCode from "qrcode.react";
 import Button from "@/components/Button"; // Adjust the import path as needed
+import { IoCopyOutline } from "react-icons/io5";
 
 interface WalletData {
   btcAddress: string;
   privateKey: string;
   seedPhrase: string;
 }
+
+const keyDisplayNames: { [key in keyof WalletData]: string } = {
+  btcAddress: "BTC Address",
+  privateKey: "Private Key",
+  seedPhrase: "Seed Phrase",
+};
 
 export default function Home() {
   const [wallet, setWallet] = useState<WalletData | null>(null);
@@ -45,25 +52,55 @@ export default function Home() {
       </div>
 
       {wallet && (
-        <div className=" w-full max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg p-5">
+        <div className="w-full max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg p-5">
           <h2 className="text-xl font-semibold mb-4">Wallet Data:</h2>
           <div className="space-y-4">
-            {Object.entries(wallet).map(([key, value]) => (
-              <div key={key} className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-400">{key}</span>
-                <div className="flex items-center gap-2">
-                  <span className="p-2 bg-gray-700 rounded text-sm break-all">
-                    {value}
+            {Object.entries(wallet).map(([key, value]) => {
+              const displayName = keyDisplayNames[key as keyof WalletData]; // Use a type assertion here
+              return key !== "seedPhrase" ? (
+                <div key={key} className="flex flex-col mb-3">
+                  <span className="text-sm font-medium text-gray-400">
+                    {displayName}
                   </span>
-                  <button
-                    className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
-                    onClick={() => copyToClipboard(value)}
-                  >
-                    Copy
-                  </button>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      readOnly
+                      value={value}
+                      className="flex-grow p-2 bg-gray-700 rounded text-sm overflow-auto"
+                      onClick={(e) => e.currentTarget.select()}
+                    />
+                    <button
+                      className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                      onClick={() => copyToClipboard(value)}
+                    >
+                      <IoCopyOutline />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ) : (
+                <div key={key} className="flex flex-col mb-3">
+                  <span className="text-sm font-medium text-gray-400">
+                    {keyDisplayNames[key]}
+                  </span>
+                  <div className="flex gap-2">
+                    <textarea
+                      readOnly
+                      value={value}
+                      className="flex-grow p-2 bg-gray-700 rounded text-sm overflow-auto resize-none"
+                      rows={4}
+                      onClick={(e) => e.currentTarget.select()}
+                    />
+                    <button
+                      className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                      onClick={() => copyToClipboard(value)}
+                    >
+                      <IoCopyOutline />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
             <div className="flex flex-col items-center mt-4">
               <QRCode value={wallet.btcAddress} size={200} />
               <span className="mt-2 text-sm font-medium">
