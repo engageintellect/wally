@@ -7,6 +7,7 @@ import { IoCopyOutline } from "react-icons/io5";
 import { RiAiGenerate } from "react-icons/ri";
 import { FaBitcoin } from "react-icons/fa";
 import { FaReadme } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 
 interface WalletData {
   btcAddress: string;
@@ -157,7 +158,10 @@ export default function Home() {
               href="https://github.com/engageintellect/wally"
               className="btn btn-primary mt-5"
             >
-              source code
+              <div className="flex items-center gap-2">
+                Source Code
+                <FaGithub className="w-7 h-7" />
+              </div>
             </a>
           </div>
         )}
