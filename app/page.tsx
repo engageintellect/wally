@@ -46,11 +46,11 @@ export default function Home() {
 
   return (
     <div>
-      <main className="min-h-screen py-5 px-2 md:p-10 items-center bg-base-100 max-w-lg w-full mx-auto">
+      <main className="min-h-screen py-5 px-2 items-center bg-base-100 max-w-lg w-full mx-auto">
         <div className="flex flex-col items-center">
           <h1 className="text-7xl">wally.</h1>
           <p className="text-lg">Bitcoin Wallet Generator</p>
-          <div className="flex w-full max-w-lg justify-center gap-2 py-5">
+          <div className="flex w-full max-w-md justify-center gap-2 py-5">
             <Button onClick={generateWallet}>
               <div className="flex items-center gap-2 w-full btn btn-primary">
                 Generate Wallet
