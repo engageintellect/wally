@@ -5,7 +5,7 @@ interface ButtonProps {
 
 const Button = ({ onClick, children }: ButtonProps) => {
   return (
-    <button className="btn btn-primary" onClick={onClick}>
+    <button className="" onClick={onClick}>
       {children}
     </button>
   );

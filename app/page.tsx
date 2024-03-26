@@ -4,6 +4,9 @@ import { useState } from "react";
 import QRCode from "qrcode.react";
 import Button from "@/components/Button"; // Adjust the import path as needed
 import { IoCopyOutline } from "react-icons/io5";
+import { RiAiGenerate } from "react-icons/ri";
+import { FaBitcoin } from "react-icons/fa";
+import { FaReadme } from "react-icons/fa";
 
 interface WalletData {
   btcAddress: string;
@@ -42,71 +45,104 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col py-10 items-center bg-gray-900 text-white">
+    <main className="min-h-screen py-5 px-2 md:p-10 items-center bg-base-100 max-w-lg w-full mx-auto">
       <div className="flex flex-col items-center">
         <h1 className="text-7xl">wally.</h1>
         <p className="text-lg">Bitcoin Wallet Generator</p>
-        <div className="flex items-center gap-8 py-5">
-          <Button onClick={generateWallet}>Generate Wallet</Button>
+        <div className="flex w-full max-w-lg justify-center gap-2 my-5">
+          <Button onClick={generateWallet}>
+            <div className="flex items-center gap-2 w-full btn btn-primary">
+              Generate Wallet
+              <RiAiGenerate className="w-7 h-7" />
+            </div>
+          </Button>
+          <Button onClick={() => setWallet("")}>
+            <div className="flex items-center gap-2 w-full btn btn-primary">
+              Learn More
+              <FaReadme className="w-7 h-7" />
+            </div>
+          </Button>
         </div>
       </div>
 
       {wallet && (
-        <div className="w-full max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg p-5">
+        <div className="w-full max-w-md mx-auto border-primary bg-base-100 rounded border p-5">
           <h2 className="text-xl font-semibold mb-4">Wallet Data:</h2>
           <div className="space-y-4">
             {Object.entries(wallet).map(([key, value]) => {
               const displayName = keyDisplayNames[key as keyof WalletData]; // Use a type assertion here
               return key !== "seedPhrase" ? (
                 <div key={key} className="flex flex-col mb-3">
-                  <span className="text-sm font-medium text-gray-400">
-                    {displayName}
-                  </span>
+                  <span className="text-sm font-medium">{displayName}</span>
                   <div className="flex gap-2">
                     <input
                       type="text"
                       readOnly
                       value={value}
-                      className="flex-grow p-2 bg-gray-700 rounded text-sm overflow-auto"
+                      className="border border-primary flex-grow p-2 bg-base-200 rounded text-sm overflow-scroll"
                       onClick={(e) => e.currentTarget.select()}
                     />
                     <button
-                      className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                      className="p-2 bg-base-300 hover:bg-base-200 text-base-content rounded"
                       onClick={() => copyToClipboard(value)}
                     >
-                      <IoCopyOutline />
+                      <IoCopyOutline className="w-7 h-7" />
                     </button>
                   </div>
                 </div>
               ) : (
                 <div key={key} className="flex flex-col mb-3">
-                  <span className="text-sm font-medium text-gray-400">
+                  <span className="text-sm font-medium">
                     {keyDisplayNames[key]}
                   </span>
                   <div className="flex gap-2">
                     <textarea
                       readOnly
                       value={value}
-                      className="flex-grow p-2 bg-gray-700 rounded text-sm overflow-auto resize-none"
-                      rows={4}
+                      className="border border-primary flex-grow p-2 bg-base-200 rounded text-sm overflow-scroll resize-none"
+                      rows={5}
                       onClick={(e) => e.currentTarget.select()}
                     />
                     <button
-                      className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                      className="p-2 bg-base-300 hover:bg-base-200 text-base-content rounded"
                       onClick={() => copyToClipboard(value)}
                     >
-                      <IoCopyOutline />
+                      <IoCopyOutline className="w-7 h-7" />
                     </button>
                   </div>
                 </div>
               );
             })}
             <div className="flex flex-col items-center mt-4">
-              <QRCode value={wallet.btcAddress} size={200} />
-              <span className="mt-2 text-sm font-medium">
+              <QRCode
+                className="rounded"
+                value={wallet.btcAddress}
+                size={200}
+              />
+              <span className="mt-2 text-sm text-primary font-medium">
                 BTC Address QR Code
               </span>
             </div>
+          </div>
+        </div>
+      )}
+
+      {!wallet && (
+        <div className="w-full max-w-md mx-auto border-primary bg-base-100 rounded border p-5">
+          <div className="text-xl font-semibold py-4">What is Wally?</div>
+          <div>
+            Wally is a simple Bitcoin wallet generator that creates a new wallet
+            every time you click the "Generate Wallet" button. The wallet
+            includes a Bitcoin address, private key, and seed phrase. You can
+            copy the wallet data to your clipboard and save it in a secure
+            location.
+          </div>
+          <div className="text-xl font-semibold py-4">Data Privacy</div>
+          <div>
+            Wally is a client-side application that generates wallet data
+            locally in your browser. The wallet data is not stored or sent to a
+            server. You can verify this by checking the network requests in your
+            browser's developer tools.
           </div>
         </div>
       )}
