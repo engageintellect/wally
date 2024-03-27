@@ -145,26 +145,28 @@ export default function Home() {
                     </div>
                   </div>
                 ) : (
-                  <div key={key} className="flex flex-col mb-3">
-                    <span className="text-sm font-medium">
-                      {keyDisplayNames[key]}
-                    </span>
-                    <div className="flex gap-2">
-                      <textarea
-                        readOnly
-                        value={value}
-                        className="border border-primary flex-grow p-2 bg-base-200 rounded text-sm overflow-scroll resize-none"
-                        rows={5}
-                        onClick={(e) => e.currentTarget.select()}
-                      />
-                      <button
-                        className="p-2 bg-base-300 hover:bg-base-200 text-base-content rounded"
-                        onClick={() => copyToClipboard(value)}
-                      >
-                        <IoCopyOutline className="w-7 h-7" />
-                      </button>
-                    </div>
-                  </div>
+                  // TODO: Seed phrase display
+                  <></>
+                  // <div key={key} className="flex flex-col mb-3">
+                  //   <span className="text-sm font-medium">
+                  //     {keyDisplayNames[key]}
+                  //   </span>
+                  //   <div className="flex gap-2">
+                  //     <textarea
+                  //       readOnly
+                  //       value={value}
+                  //       className="border border-primary flex-grow p-2 bg-base-200 rounded text-sm overflow-scroll resize-none"
+                  //       rows={5}
+                  //       onClick={(e) => e.currentTarget.select()}
+                  //     />
+                  //     <button
+                  //       className="p-2 bg-base-300 hover:bg-base-200 text-base-content rounded"
+                  //       onClick={() => copyToClipboard(value)}
+                  //     >
+                  //       <IoCopyOutline className="w-7 h-7" />
+                  //     </button>
+                  //   </div>
+                  // </div>
                 );
               })}
               <div className="flex flex-col items-center mt-4">
