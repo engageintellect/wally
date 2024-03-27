@@ -5,9 +5,9 @@ import QRCode from "qrcode.react";
 import Button from "@/components/Button"; // Adjust the import path as needed
 import { IoCopyOutline } from "react-icons/io5";
 import { RiAiGenerate } from "react-icons/ri";
-import { FaBitcoin } from "react-icons/fa";
 import { FaReadme } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface WalletData {
   btcAddress: string;
@@ -23,6 +23,7 @@ const keyDisplayNames: { [key in keyof WalletData]: string } = {
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [toast, setToast] = useState({ message: "", type: "" });
   const [wallet, setWallet] = useState<WalletData | null>(null);
   const [requestCounter, setRequestCounter] = useState<number>(0);
 
@@ -40,17 +41,49 @@ export default function Home() {
     }
   };
 
+  // const copyToClipboard = async (text: string) => {
+  //   if ("clipboard" in navigator) {
+  //     return await navigator.clipboard.writeText(text);
+  //   } else {
+  //     return document.execCommand("copy", true, text);
+  //   }
+  // };
+
   const copyToClipboard = async (text: string) => {
-    if ("clipboard" in navigator) {
-      return await navigator.clipboard.writeText(text);
-    } else {
-      return document.execCommand("copy", true, text);
+    try {
+      if ("clipboard" in navigator) {
+        await navigator.clipboard.writeText(text);
+        setToast({ message: "Copied to clipboard!", type: "success" });
+      } else {
+        // Fallback for older browsers
+        const successful = document.execCommand("copy", true, text);
+        if (successful) {
+          setToast({ message: "Copied to clipboard!", type: "success" });
+        } else {
+          throw new Error("Copy command was unsuccessful");
+        }
+      }
+      setTimeout(() => setToast({ message: "", type: "" }), 3000); // Hide toast after 3 seconds
+    } catch (error) {
+      setToast({ message: "Failed to copy!", type: "error" });
+      setTimeout(() => setToast({ message: "", type: "" }), 3000); // Hide toast after 3 seconds
     }
   };
 
   return (
     <div>
-      <main className="min-h-screen py-5 px-2 items-center bg-base-100 max-w-lg w-full mx-auto">
+      {/* Toast notification */}
+      {toast.message && (
+        <div className={`toast toast-bottom toast-center toast-${toast.type}`}>
+          <div className={`alert alert-${toast.type}`}>
+            <div>
+              <span>{toast.message}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <main className="min-h-screen py-5 md:py-10 px-2 items-center bg-base-100 max-w-lg w-full mx-auto">
         <div className="flex flex-col items-center">
           <h1 className="text-7xl">wally.</h1>
           <p className="text-lg">Bitcoin Wallet Generator</p>
@@ -59,7 +92,8 @@ export default function Home() {
               <div className="flex items-center gap-2 w-full btn btn-primary">
                 Generate Wallet
                 {loading ? (
-                  <span className="loading loading-spinner loading-sm"></span>
+                  // <span className="loading loading-spinner"></span>
+                  <AiOutlineLoading3Quarters className="w-7 h-7 animate-spin" />
                 ) : (
                   <RiAiGenerate className="w-7 h-7" />
                 )}
@@ -81,6 +115,7 @@ export default function Home() {
                 Wallet Data:
                 <a
                   href={`https://www.blockchain.com/explorer/addresses/btc/${wallet.btcAddress}`}
+                  target="_blank"
                   className="btn btn-primary"
                 >
                   View on Blockchain
