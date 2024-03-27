@@ -2,7 +2,7 @@
 
 ## Bitcoin Wallet Generator
 
-Wally is a simple Bitcoin wallet generator that generates a Bitcoin wallet address and private key. It is written in Python and uses the `bitcoin` library to generate the keys.
+Wally is a simple Bitcoin wallet generator that generates a Bitcoin wallet address and private key. It is written in Next.js and uses the [btc-wallet-generator](https://github.com/engageintellect/btc-wallet-generator) to generate the keys via an API endpoint.
 
 ## Getting Started
 
