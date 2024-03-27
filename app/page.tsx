@@ -75,7 +75,7 @@ export default function Home() {
       {/* Toast notification */}
       {toast.message && (
         <div className={`toast toast-bottom toast-center toast-${toast.type}`}>
-          <div className={`alert alert-${toast.type}`}>
+          <div className={`alert alert-success`}>
             <div>
               <span>{toast.message}</span>
             </div>
