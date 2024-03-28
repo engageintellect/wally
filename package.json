@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bitcoinjs-lib": "^6.1.5",
     "daisyui": "^4.8.0",
     "next": "14.1.4",
     "qrcode.react": "^3.1.0",

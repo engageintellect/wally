@@ -189,11 +189,11 @@ export default function Home() {
               <div>
                 <div className="text-xl font-semibold pb-4">What is Wally?</div>
                 <div>
-                  Wally is a simple Bitcoin wallet generator that creates a new
-                  wallet every time you click the &quot;Generate Wallet&quot;
-                  button. The wallet includes a Bitcoin address, private key,
-                  and seed phrase. You can copy the wallet data to your
-                  clipboard and save it in a secure location.
+                  Wally is a simple Bitcoin wallet generator that creates a new,
+                  random, Bitcoin wallet every time you click the &quot;Generate
+                  Wallet&quot; button. The wallet includes a Bitcoin address and
+                  private key. You can copy the wallet data to your clipboard
+                  and save it in a secure location.
                 </div>
               </div>
 
@@ -201,9 +201,10 @@ export default function Home() {
                 <div className="text-xl font-semibold pb-4">Data Privacy</div>
                 <div>
                   Wally is a client-side application that generates wallet data
-                  locally in your browser. The wallet data is never sent to a
-                  server or stored online. You can verify this by checking the
-                  network tab in your browser&apos;s developer tools.
+                  locally in your browser. The wallet data is never sent back to
+                  a server or stored in any database. You can verify this by
+                  checking the network tab in your browser&apos;s developer
+                  tools.
                 </div>
               </div>
             </div>
